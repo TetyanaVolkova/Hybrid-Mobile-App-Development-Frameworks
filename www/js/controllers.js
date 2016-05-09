@@ -309,30 +309,14 @@ angular.module('conFusion.controllers', [])
             
                     }])
 
-        .controller('FavoritesController', ['$scope', 'menuFactory', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', function ($scope, menuFactory, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout) {
+        .controller('FavoritesController', ['$scope', 'dishes', 'favorites', 'favoriteFactory', 'baseURL', '$ionicListDelegate', '$ionicPopup', '$ionicLoading', '$timeout', function ($scope, dishes, favorites, favoriteFactory, baseURL, $ionicListDelegate, $ionicPopup, $ionicLoading, $timeout) {
 
             $scope.baseURL = baseURL;
             $scope.shouldShowDelete = false;
 
-            $ionicLoading.show({
-                template: '<ion-spinner></ion-spinner> Loading...'
-            });
+            $scope.favorites = favorites;
 
-            $scope.favorites = favoriteFactory.getFavorites();
-
-            $scope.dishes = menuFactory.query(
-                function (response) {
-                    $scope.dishes = response;
-                    $timeout(function () {
-                        $ionicLoading.hide();
-                    }, 1000);
-                },
-                function (response) {
-                    $scope.message = "Error: " + response.status + " " + response.statusText;
-                    $timeout(function () {
-                        $ionicLoading.hide();
-                    }, 1000);
-                });
+            $scope.dishes = dishes;
 
              $scope.deleteFavorite = function (index) {
 
